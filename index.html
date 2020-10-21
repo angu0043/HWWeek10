@@ -11,13 +11,26 @@
   <link rel="stylesheet" type="text/css" href="style.css" media="all">
   
 </head>
+<body>
+<h1> HW Week 10 </h1>
 
+  <h2> Score of happiness in different countries </h2>  
+  <div id="vis1"> </div>
+  
+  <h2> Score of happiness overtime </h2>  
+  <div id="vis2"> </div>
+  
 <div id="symbol_map"></div>
 
 <script type="text/javascript">
-
-  var spec2 = "visualization.vl.json";
-  vegaEmbed('#symbol_map', spec2).then(function(result) {
+  
+  var spec1 = "visualization.vl.json";
+  vegaEmbed('#vis1', spec1).then(function(result) {
+    // Access the Vega view instance (https://vega.github.io/vega/docs/api/view/) as result.view
+  }).catch(console.error);
+  
+  var spec2 = "visualization2.vl.json";
+  vegaEmbed('#vis2', spec2).then(function(result) {
     // Access the Vega view instance (https://vega.github.io/vega/docs/api/view/) as result.view
   }).catch(console.error);
 </script>
