@@ -1,0 +1,115 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v4.json",
+  "width": 800,
+  "height": 600,
+  "title": "Score of happiness overtime",
+  "data": {
+    "url": "https://raw.githubusercontent.com/angu0043/HWWeek10/main/FullData.csv"
+  },
+  "params": [
+    {
+      "name": "Continent_selection",
+      "bind": {
+        "input": "select",
+        "options": [
+          null,
+          "North America",
+          "South America",
+          "Europe",
+          "Africa",
+          "Asia",
+          "Oceania"
+        ],
+        "labels": [
+          "Show All",
+          "North America",
+          "South America",
+          "Europe",
+          "Africa",
+          "Asia",
+          "Oceania"
+        ],
+        "name": "Continent Selection: "
+      }
+    },
+    {
+      "name": "Year",
+      "value": 2015,
+      "bind": {
+        "input": "range",
+        "min": 2015,
+        "max": 2019,
+        "step": 1,
+        "name": "Year: "
+      }
+    }
+  ],
+  "transform": [
+    {
+      "filter": "Continent_selection == null || datum.Continent == Continent_selection"
+    },
+    {"filter": "datum.Year == Year"}
+  ],
+  "encoding": {
+    "x": {
+      "field": "GDP per capita",
+      "type": "quantitative",
+      "title": "GDP score",
+      "axis": {"tickCount": 7}
+    },
+    "y": {
+      "field": "Score",
+      "type": "quantitative",
+      "title": "score of happiness",
+      "axis": {"tickCount": 7},
+      "scale": {"domain": [2.5, 8]}
+    }
+  },
+  "layer": [
+    {
+      "mark": "circle",
+      "encoding": {
+        "color": {"field": "Continent", "type": "nominal"},
+        "size": {"value": 60},
+        "tooltip": [
+          {"field": "Country or region", "title": "Country", "type": "nominal"},
+          {
+            "field": "Score",
+            "title": "Score of happiness",
+            "type": "quantitative",
+            "format": ","
+          },
+          {
+            "field": "GDP per capita",
+            "title": "GDP",
+            "type": "quantitative",
+            "format": ".2f"
+          },
+          {"field": "Continent", "type": "nominal"}
+        ]
+      }
+    },
+    {
+      "mark": {
+        "type": "text",
+        "align": "right",
+        "baseline": "middle",
+        "dx": -12,
+        "fontSize": 11.5,
+        "fontStyle": "italic"
+      },
+      "encoding": {
+        "text": {"field": "Country or region", "type": "nominal"},
+        "color": {"value": "black"},
+        "opacity": {
+          "condition": {
+            "test": "datum['Country or region'] == 'United States' || datum['Country or region'] == 'Australia' || datum['Country or region'] == 'China' || datum['Country or region'] == 'Italy' || datum['Country or region'] == 'Vietnam' ",
+            "value": 1
+          },
+          "value": 0
+        }
+      }
+    }
+  ],
+  "config": {}
+}
